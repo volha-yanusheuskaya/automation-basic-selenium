@@ -15,7 +15,7 @@ public class RegistrationLanguageDropdownTest {
 
     private RegistrationScreen registrationScreen;
 
-    @BeforeClass(description = "Browser opens")
+    @BeforeClass
     public void browserSetup() {
         WebDriver driver = DriverFactory.getInstance().getChromeDriver();
         registrationScreen = new RegistrationScreen(driver);
