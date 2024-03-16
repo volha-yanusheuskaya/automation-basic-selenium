@@ -4,7 +4,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import taf.driver.DriverFactory;
-import taf.product.profile.RegistrationScreen;
+import taf.product.profile.pages.RegistrationScreen;
 
 import static org.testng.Assert.assertEquals;
 

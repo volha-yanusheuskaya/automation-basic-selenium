@@ -4,32 +4,21 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import taf.driver.DriverFactory;
-import taf.product.profile.AlertBannerComponent;
-import taf.product.profile.RegistrationScreen;
+import taf.product.profile.components.AlertBannerComponent;
+import taf.product.profile.service.RegistrationService;
 
 import static org.testng.Assert.assertTrue;
 
 public class RegistrationUserExistsTest {
 
-    private RegistrationScreen registrationScreen;
     private AlertBannerComponent alertBannerComponent;
 
     @BeforeClass
     public void browserSetup() {
         WebDriver driver = DriverFactory.getInstance().getChromeDriver();
-        registrationScreen = new RegistrationScreen(driver);
+        RegistrationService registrationService = new RegistrationService();
         alertBannerComponent = new AlertBannerComponent(driver);
-    }
-
-    @BeforeClass
-    public void fillOutRegistrationForm() {
-        registrationScreen
-                .openPage()
-                .typeUserName("Auto", "Test")
-                .typeExistsEmail()
-                .typePassword("1234Test")
-                .clickTermOfUseCheckbox()
-                .clickContinueButton();
+        registrationService.registerExistingUser(driver);
     }
 
     @Test(priority = 1)
