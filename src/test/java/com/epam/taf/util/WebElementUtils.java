@@ -1,18 +1,17 @@
-package taf.util;
+package com.epam.taf.util;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import taf.driver.DriverFactory;
+import com.epam.taf.driver.DriverSingleton;
 
-import static taf.driver.DriverWait.waitForVisibility;
+import static com.epam.taf.driver.DriverWait.waitForVisibility;
 
 public class WebElementUtils {
 
-    private static final WebDriver driver = DriverFactory.getInstance().getChromeDriver();
+    private static final WebDriver driver = DriverSingleton.getDriver();
 
     private WebElementUtils() {
-
     }
 
     public static WebElement highlightElement(WebElement webElement) {

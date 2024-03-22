@@ -1,4 +1,4 @@
-package taf.driver;
+package com.epam.taf.driver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,7 +11,7 @@ public class DriverWait {
 
     public static final int TIME_OUT_IN_SECONDS = 60;
 
-    private static final WebDriver driver = DriverFactory.getInstance().getChromeDriver();
+    public static final WebDriver driver = DriverSingleton.getDriver();
 
     private DriverWait() {
     }

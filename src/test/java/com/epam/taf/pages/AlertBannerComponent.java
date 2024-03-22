@@ -1,14 +1,17 @@
-package taf.product.profile.components;
+package com.epam.taf.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import taf.product.profile.pages.AbstractScreen;
 
-import static taf.driver.DriverWait.waitElementToBeClickable;
-import static taf.driver.DriverWait.waitForVisibility;
+import static com.epam.taf.driver.DriverWait.waitElementToBeClickable;
+import static com.epam.taf.driver.DriverWait.waitForVisibility;
 
-public class AlertBannerComponent extends AbstractScreen {
+public class AlertBannerComponent extends AbstractPage {
+
+    private final Logger logger = LogManager.getRootLogger();
 
     @FindBy(css = "div[role='alert']")
     private WebElement alertBanner;
@@ -28,7 +31,9 @@ public class AlertBannerComponent extends AbstractScreen {
 
     public boolean isAlertBannerDisplayed() {
         waitForVisibility(alertBanner);
-        return alertBanner.isDisplayed();
+        boolean isAlertBannerDisplayed = alertBanner.isDisplayed();
+        logger.info("The Alert banner is displayed");
+        return isAlertBannerDisplayed;
     }
 
     public boolean isAlertBannerIconDisplayed() {
@@ -36,14 +41,17 @@ public class AlertBannerComponent extends AbstractScreen {
         return alertBannerIcon.isDisplayed();
     }
 
-    public void clickSignInLink() {
+    public AlertBannerComponent clickSignInLink() {
         waitForVisibility(signInLink);
         waitElementToBeClickable(signInLink);
         signInLink.click();
+        logger.info("The Sign in link is clicked");
+        return this;
     }
 
     public boolean isUserNameInputDisplayed() {
         waitForVisibility(userNameInput);
+        logger.info("The Login form is displayed");
         return userNameInput.isDisplayed();
     }
 }
