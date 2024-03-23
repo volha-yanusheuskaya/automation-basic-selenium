@@ -1,28 +1,25 @@
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+package com.epam.taf.test;
+
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import taf.driver.DriverFactory;
-import taf.product.profile.pages.RegistrationScreen;
+import com.epam.taf.pages.RegistrationPage;
 
 import static org.testng.Assert.assertEquals;
 
-public class RegistrationPageTest {
+public class RegistrationPageTest extends CommonConditions {
 
-    private RegistrationScreen registrationScreen;
+    private static final String REGISTRATION_PAGE_TITLE = "Create an account | Thomson Reuters";
 
-    @BeforeClass
-    public void browserSetup() {
-        WebDriver driver = DriverFactory.getInstance().getChromeDriver();
-        registrationScreen = new RegistrationScreen(driver);
-    }
+    private RegistrationPage registrationScreen;
 
     @Test(priority = 1)
     public void verifyRegistrationScreenTitle() {
-        assertEquals(registrationScreen.openPage().getPageTitle(),
-                "Create an account | Thomson Reuters",
-                "Titles are not equals!");
+        registrationScreen = new RegistrationPage(driver);
+        String expectedPageTitle = registrationScreen
+                .openPage()
+                .clickAcceptCookieBanner()
+                .getPageTitle();
+        assertEquals(expectedPageTitle, REGISTRATION_PAGE_TITLE, "Titles are not equals!");
     }
 
     @Test(priority = 2)
@@ -36,10 +33,5 @@ public class RegistrationPageTest {
         softAssert.assertTrue(registrationScreen.isTermOfUseCheckboxDisplayed(), "Term of use checkbox is not displayed!");
         softAssert.assertTrue(registrationScreen.isContinueButtonDisplayed(), "Continue button is not displayed!");
         softAssert.assertAll();
-    }
-
-    @AfterClass
-    public void browserTearDown() {
-        DriverFactory.getInstance().closeDriver();
     }
 }

@@ -1,18 +1,25 @@
-package taf.product.profile.pages;
+package com.epam.taf.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import com.epam.taf.model.User;
+import com.epam.taf.service.TestDataReader;
 
-import static taf.driver.DriverWait.*;
-import static taf.util.WebElementUtils.highlightElement;
+import static com.epam.taf.driver.DriverWait.waitForVisibility;
+import static com.epam.taf.driver.DriverWait.waitElementToBeClickable;
+import static com.epam.taf.util.WebElementUtils.highlightElement;
 
-public class RegistrationScreen extends AbstractScreen {
-
-    public static final String REGISTRATION_PAGE_URL = "https://account.thomsonreuters.com/en-us/profile/create-account";
+public class RegistrationPage extends AbstractPage {
 
     public static final String LANGUAGE_VALUE_PATTERN = "//button/span[text()='%s']";
     public static final String LANGUAGE_WITH_CHECKMARK = "//button/span[text()='%s']/following-sibling::span";
+
+    public static final String TESTDATA_REGISTRATION_PAGE_URL = "testdata.registration.page.url";
+
+    private final Logger logger = LogManager.getRootLogger();
 
     @FindBy(id = "firstName")
     private WebElement firstNameInput;
@@ -41,55 +48,67 @@ public class RegistrationScreen extends AbstractScreen {
     @FindBy(className = "Button")
     private WebElement continueButton;
 
-    @FindBy(css = ".banner-close-button")
-    private WebElement closeCookieBanner;
+    @FindBy(css = "#onetrust-accept-btn-handler")
+    private WebElement acceptCookieBanner;
 
-    public RegistrationScreen(WebDriver driver) {
+    public RegistrationPage(WebDriver driver) {
         super(driver);
     }
 
-    public RegistrationScreen openPage() {
-        driver.get(REGISTRATION_PAGE_URL);
+    public RegistrationPage openPage() {
+        driver.get(TestDataReader.getTestData(TESTDATA_REGISTRATION_PAGE_URL));
         waitForVisibility(firstNameInput);
+        logger.info("The Create account page is opened");
         return this;
     }
 
     public String getPageTitle() {
-        return driver.getTitle();
+        String title = driver.getTitle();
+        logger.info(String.format("The Title of the page - '%s'", title));
+        return title;
     }
 
     public void typeFirstName(String firstName) {
         firstNameInput.sendKeys(firstName);
+        logger.info(String.format("First name -'%s'", firstName));
     }
 
     public boolean isFirstNameInputDisplayed() {
         highlightElement(firstNameInput);
-        return firstNameInput.isDisplayed();
+        boolean isFirstNameInputDisplayed = firstNameInput.isDisplayed();
+        logger.info("The First name input is displayed");
+        return isFirstNameInputDisplayed;
     }
 
     public void typeLastName(String lastName) {
         lastNameInput.sendKeys(lastName);
+        logger.info(String.format("Last name -'%s'", lastName));
     }
 
     public boolean isLastNameInputDisplayed() {
         highlightElement(lastNameInput);
-        return lastNameInput.isDisplayed();
+        boolean isLastNameInputDisplayed = lastNameInput.isDisplayed();
+        logger.info("The Last name input is displayed");
+        return isLastNameInputDisplayed;
     }
 
-    public RegistrationScreen typeUserName(String firstName, String lastName) {
+    public RegistrationPage typeUserName(String firstName, String lastName) {
         typeFirstName(firstName);
         typeLastName(lastName);
         return this;
     }
 
-    public RegistrationScreen typeExistsEmail() {
-        emailInput.sendKeys("test_email_profile1@mailinator.com");
+    public RegistrationPage typeEmail(String email) {
+        emailInput.sendKeys(email);
+        logger.info(String.format("Email -'%s'", email));
         return this;
     }
 
     public boolean isEmailInputDisplayed() {
         highlightElement(emailInput);
-        return emailInput.isDisplayed();
+        boolean isEmailInputDisplayed = emailInput.isDisplayed();
+        logger.info("The Email input is displayed");
+        return isEmailInputDisplayed;
     }
 
     public void typeNewPassword(String newPassword) {
@@ -100,7 +119,9 @@ public class RegistrationScreen extends AbstractScreen {
 
     public boolean isNewPasswordInputDisplayed() {
         highlightElement(newPasswordInput);
-        return newPasswordInput.isDisplayed();
+        boolean isNewPasswordInputDisplayed = newPasswordInput.isDisplayed();
+        logger.info("The New password input is displayed");
+        return isNewPasswordInputDisplayed;
     }
 
     public void typePasswordConfirmation(String passwordConfirmation) {
@@ -109,22 +130,26 @@ public class RegistrationScreen extends AbstractScreen {
 
     public boolean isPasswordConfirmationInputDisplayed() {
         highlightElement(passwordConfirmationInput);
-        return passwordConfirmationInput.isDisplayed();
+        boolean isPasswordConfirmationInputDisplayed = passwordConfirmationInput.isDisplayed();
+        logger.info("The Password confirmation input is displayed");
+        return isPasswordConfirmationInputDisplayed;
     }
 
-    public RegistrationScreen typePassword(String password) {
+    public RegistrationPage typePassword(String password) {
         typeNewPassword(password);
         typePasswordConfirmation(password);
+        logger.info(String.format("Password -'%s'", password));
         return this;
     }
 
-    public RegistrationScreen clickLanguageDropdown() {
+    public RegistrationPage clickLanguageDropdown() {
         waitForVisibility(languageDropdown);
         waitElementToBeClickable(languageDropdown);
         new Actions(driver)
                 .scrollToElement(languageDropdown)
                 .click(languageDropdown)
                 .perform();
+        logger.info("The Language dropdown is opened");
         return this;
     }
 
@@ -132,7 +157,7 @@ public class RegistrationScreen extends AbstractScreen {
         return driver.findElements(By.cssSelector(".CiamDropdown-itemInnerText")).size();
     }
 
-    public RegistrationScreen clickLanguageByValue(String value) {
+    public RegistrationPage clickLanguageByValue(String value) {
         driver.findElement(By.xpath(String.format(LANGUAGE_VALUE_PATTERN, value))).click();
         return this;
     }
@@ -145,27 +170,41 @@ public class RegistrationScreen extends AbstractScreen {
         return driver.findElement(By.xpath(String.format(LANGUAGE_WITH_CHECKMARK, value))).isDisplayed();
     }
 
-    public RegistrationScreen clickTermOfUseCheckbox() {
+    public RegistrationPage clickTermOfUseCheckbox() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", termOfUseCheckbox);
+        logger.info("The Term of use checkbox is clicked");
         return this;
     }
 
     public boolean isTermOfUseCheckboxDisplayed() {
         highlightElement(termOfUseCheckbox);
-        return termOfUseCheckbox.isDisplayed();
+        boolean isTermOfUseCheckboxDisplayed = termOfUseCheckbox.isDisplayed();
+        logger.info("The Term of use checkbox is displayed");
+        return isTermOfUseCheckboxDisplayed;
     }
 
     public void clickContinueButton() {
         continueButton.click();
+        logger.info("The Continue button is clicked");
     }
 
     public boolean isContinueButtonDisplayed() {
         highlightElement(continueButton);
-        return continueButton.isDisplayed();
+        boolean isContinueButtonDisplayed = continueButton.isDisplayed();
+        logger.info("The Continue button is displayed");
+        return isContinueButtonDisplayed;
     }
 
-    public RegistrationScreen clickCloseCookieBanner() {
-        closeCookieBanner.click();
+    public RegistrationPage clickAcceptCookieBanner() {
+        acceptCookieBanner.click();
         return this;
+    }
+
+    public void fillOutRegistrationForm(User user) {
+        typeUserName(user.getFirstName(), user.getLastName())
+                .typeEmail(user.getEmail())
+                .typePassword(user.getPassword())
+                .clickTermOfUseCheckbox()
+                .clickContinueButton();
     }
 }
