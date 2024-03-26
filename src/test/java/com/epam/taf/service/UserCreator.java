@@ -1,6 +1,7 @@
 package com.epam.taf.service;
 
 import com.epam.taf.model.User;
+import com.epam.taf.model.UserBuilder;
 
 public class UserCreator {
 
@@ -16,8 +17,11 @@ public class UserCreator {
     }
 
     public static User createExistingUser() {
-        return new User(FIRST_NAME, LAST_NAME,
-                TestDataReader.getTestData(TESTDATA_USER_EMAIL),
-                TestDataReader.getTestData(TESTDATA_USER_PASSWORD));
+        return new UserBuilder()
+                .setFirstName(FIRST_NAME)
+                .setLastName(LAST_NAME)
+                .setEmail(TestDataReader.getTestData(TESTDATA_USER_EMAIL))
+                .setPassword(TestDataReader.getTestData(TESTDATA_USER_PASSWORD))
+                .createUser();
     }
 }
