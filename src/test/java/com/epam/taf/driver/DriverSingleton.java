@@ -10,13 +10,21 @@ import org.openqa.selenium.safari.SafariDriver;
 
 public class DriverSingleton {
     private static WebDriver driver;
+    private static DriverSingleton instance = new DriverSingleton();
 
     private static final Logger logger = LogManager.getRootLogger();
 
     private DriverSingleton() {
     }
 
-    public static WebDriver getDriver() {
+    public static DriverSingleton getInstance() {
+        if (instance == null) {
+            instance = new DriverSingleton();
+        }
+        return instance;
+    }
+
+    public WebDriver getDriver() {
         if (driver == null) {
             switch (System.getProperty("browser")) {
                 case "firefox": {
@@ -40,7 +48,7 @@ public class DriverSingleton {
         return driver;
     }
 
-    public static void closeDriver() {
+    public void closeDriver() {
         if (driver != null) {
             driver.quit();
             driver = null;

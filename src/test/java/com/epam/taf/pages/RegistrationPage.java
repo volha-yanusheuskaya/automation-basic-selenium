@@ -8,8 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import com.epam.taf.model.User;
 import com.epam.taf.service.TestDataReader;
 
-import static com.epam.taf.driver.DriverWait.waitForVisibility;
-import static com.epam.taf.driver.DriverWait.waitElementToBeClickable;
+import static com.epam.taf.driver.DriverWait.*;
 import static com.epam.taf.util.WebElementUtils.highlightElement;
 
 public class RegistrationPage extends AbstractPage {
@@ -197,6 +196,7 @@ public class RegistrationPage extends AbstractPage {
 
     public RegistrationPage clickAcceptCookieBanner() {
         acceptCookieBanner.click();
+        waitForInvisibility(acceptCookieBanner);
         return this;
     }
 

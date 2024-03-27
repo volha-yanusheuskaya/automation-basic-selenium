@@ -49,7 +49,7 @@ public class TestListener implements ITestListener {
 
     private void saveScreenshot(String result) {
         File screenCapture = ((TakesScreenshot) DriverSingleton
-                .getDriver())
+                .getInstance().getDriver())
                 .getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(screenCapture, new File(
