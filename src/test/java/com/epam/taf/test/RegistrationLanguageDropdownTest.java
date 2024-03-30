@@ -1,5 +1,7 @@
 package com.epam.taf.test;
 
+import com.epam.taf.components.CookieBannerComponent;
+import com.epam.taf.components.LanguageDropdownComponent;
 import org.testng.annotations.Test;
 import com.epam.taf.pages.RegistrationPage;
 
@@ -11,14 +13,16 @@ public class RegistrationLanguageDropdownTest extends CommonConditions {
     private static final int EXPECTED_NUMBER_OF_LANGUAGES = 7;
     private static final String FRANCE_LANGUAGE = "Français (CA)";
 
-    private RegistrationPage registrationScreen;
+    private LanguageDropdownComponent languageDropdownComponent;
 
     @Test(priority = 1)
     public void verifyLanguageValues() {
-        registrationScreen = new RegistrationPage(driver);
-        int actualNumberOfLanguages = registrationScreen
-                .openPage()
-                .clickAcceptCookieBanner()
+        languageDropdownComponent = new LanguageDropdownComponent(driver);
+
+        new RegistrationPage(driver).openPage();
+        new CookieBannerComponent(driver).clickAcceptCookieBanner();
+
+        int actualNumberOfLanguages = languageDropdownComponent
                 .clickLanguageDropdown()
                 .getLanguageDropdownSize();
         assertEquals(actualNumberOfLanguages, EXPECTED_NUMBER_OF_LANGUAGES, "Languages are not 7!");
@@ -26,7 +30,7 @@ public class RegistrationLanguageDropdownTest extends CommonConditions {
 
     @Test(priority = 2)
     public void selectFrenchLanguage() {
-        String languageDropdownHeader = registrationScreen
+        String languageDropdownHeader = languageDropdownComponent
                 .clickLanguageByValue(FRANCE_LANGUAGE)
                 .getLanguageDropdownHeader();
         assertEquals(languageDropdownHeader, FRANCE_LANGUAGE, "France language is not displayed!");
@@ -34,7 +38,7 @@ public class RegistrationLanguageDropdownTest extends CommonConditions {
 
     @Test(priority = 3)
     public void selectedLanguageHasCheckmark() {
-        boolean languageValueHasCheckmark = registrationScreen
+        boolean languageValueHasCheckmark = languageDropdownComponent
                 .clickLanguageDropdown()
                 .isLanguageValueHasCheckmark(FRANCE_LANGUAGE);
         assertTrue(languageValueHasCheckmark, "Checkmark is not displayed!");

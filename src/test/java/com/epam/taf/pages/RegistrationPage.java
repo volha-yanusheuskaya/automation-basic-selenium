@@ -1,24 +1,16 @@
 package com.epam.taf.pages;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import com.epam.taf.model.User;
 import com.epam.taf.service.TestDataReader;
 
-import static com.epam.taf.driver.DriverWait.*;
+import static com.epam.taf.util.WaitUtils.*;
 import static com.epam.taf.util.WebElementUtils.highlightElement;
 
 public class RegistrationPage extends AbstractPage {
 
-    public static final String LANGUAGE_VALUE_PATTERN = "//button/span[text()='%s']";
-    public static final String LANGUAGE_WITH_CHECKMARK = "//button/span[text()='%s']/following-sibling::span";
-
     public static final String TESTDATA_REGISTRATION_PAGE_URL = "testdata.registration.page.url";
-
-    private final Logger logger = LogManager.getRootLogger();
 
     @FindBy(id = "firstName")
     private WebElement firstNameInput;
@@ -35,20 +27,11 @@ public class RegistrationPage extends AbstractPage {
     @FindBy(id = "passwordConfirmation")
     private WebElement passwordConfirmationInput;
 
-    @FindBy(css = ".CiamDropdown")
-    private WebElement languageDropdown;
-
-    @FindBy(css = ".CiamDropdown-headerText")
-    private WebElement languageHeaderValue;
-
     @FindBy(className = "CheckboxInput-checkbox")
     private WebElement termOfUseCheckbox;
 
     @FindBy(className = "Button")
     private WebElement continueButton;
-
-    @FindBy(css = "#onetrust-accept-btn-handler")
-    private WebElement acceptCookieBanner;
 
     public RegistrationPage(WebDriver driver) {
         super(driver);
@@ -141,34 +124,6 @@ public class RegistrationPage extends AbstractPage {
         return this;
     }
 
-    public RegistrationPage clickLanguageDropdown() {
-        waitForVisibility(languageDropdown);
-        waitElementToBeClickable(languageDropdown);
-        new Actions(driver)
-                .scrollToElement(languageDropdown)
-                .click(languageDropdown)
-                .perform();
-        logger.info("The Language dropdown is opened");
-        return this;
-    }
-
-    public int getLanguageDropdownSize() {
-        return driver.findElements(By.cssSelector(".CiamDropdown-itemInnerText")).size();
-    }
-
-    public RegistrationPage clickLanguageByValue(String value) {
-        driver.findElement(By.xpath(String.format(LANGUAGE_VALUE_PATTERN, value))).click();
-        return this;
-    }
-
-    public String getLanguageDropdownHeader() {
-        return languageHeaderValue.getText();
-    }
-
-    public boolean isLanguageValueHasCheckmark(String value) {
-        return driver.findElement(By.xpath(String.format(LANGUAGE_WITH_CHECKMARK, value))).isDisplayed();
-    }
-
     public RegistrationPage clickTermOfUseCheckbox() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", termOfUseCheckbox);
         logger.info("The Term of use checkbox is clicked");
@@ -192,19 +147,5 @@ public class RegistrationPage extends AbstractPage {
         boolean isContinueButtonDisplayed = continueButton.isDisplayed();
         logger.info("The Continue button is displayed");
         return isContinueButtonDisplayed;
-    }
-
-    public RegistrationPage clickAcceptCookieBanner() {
-        acceptCookieBanner.click();
-        waitForInvisibility(acceptCookieBanner);
-        return this;
-    }
-
-    public void fillOutRegistrationForm(User user) {
-        typeUserName(user.getFirstName(), user.getLastName())
-                .typeEmail(user.getEmail())
-                .typePassword(user.getPassword())
-                .clickTermOfUseCheckbox()
-                .clickContinueButton();
     }
 }

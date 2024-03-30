@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import com.epam.taf.driver.DriverSingleton;
 
-import static com.epam.taf.driver.DriverWait.waitForVisibility;
+import static com.epam.taf.util.WaitUtils.waitForVisibility;
 
 public class WebElementUtils {
 

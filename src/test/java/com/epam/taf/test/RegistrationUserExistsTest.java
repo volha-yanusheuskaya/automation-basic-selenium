@@ -1,9 +1,10 @@
 package com.epam.taf.test;
 
+import com.epam.taf.components.CookieBannerComponent;
+import com.epam.taf.service.RegistrationService;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import com.epam.taf.model.User;
-import com.epam.taf.pages.AlertBannerComponent;
+import com.epam.taf.components.AlertBannerComponent;
 import com.epam.taf.pages.RegistrationPage;
 import com.epam.taf.service.UserCreator;
 
@@ -16,12 +17,11 @@ public class RegistrationUserExistsTest extends CommonConditions {
     @Test(priority = 1)
     public void verifyAlertBanner() {
         alertBannerComponent = new AlertBannerComponent(driver);
-        User existingUser = UserCreator.createExistingUser();
 
-        new RegistrationPage(driver)
-                .openPage()
-                .clickAcceptCookieBanner();
-        new RegistrationPage(driver).fillOutRegistrationForm(existingUser);
+        new RegistrationPage(driver).openPage();
+        new CookieBannerComponent(driver).clickAcceptCookieBanner();
+
+        new RegistrationService(driver).fillOutRegistrationForm(UserCreator.createExistingUser());
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(alertBannerComponent.isAlertBannerDisplayed());
@@ -30,7 +30,7 @@ public class RegistrationUserExistsTest extends CommonConditions {
     }
 
     @Test(priority = 2)
-    public void verifyRedirectToProfilePage() {
+    public void verifyRedirectToLoginPage() {
         assertTrue(alertBannerComponent.clickSignInLink().isUserNameInputDisplayed());
     }
 }

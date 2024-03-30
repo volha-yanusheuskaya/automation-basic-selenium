@@ -1,5 +1,6 @@
-package com.epam.taf.driver;
+package com.epam.taf.util;
 
+import com.epam.taf.driver.DriverSingleton;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -7,13 +8,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class DriverWait {
+public class WaitUtils {
 
     public static final int TIME_OUT_IN_SECONDS = 60;
 
     public static final WebDriver driver = DriverSingleton.getInstance().getDriver();
 
-    private DriverWait() {
+    private WaitUtils() {
     }
 
     public static WebElement waitForVisibility(WebElement element) {
