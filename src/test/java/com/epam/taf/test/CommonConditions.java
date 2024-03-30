@@ -12,11 +12,11 @@ public class CommonConditions {
 
     @BeforeClass
     public void browserSetup() {
-        driver = DriverSingleton.getDriver();
+        driver = DriverSingleton.getInstance().getDriver();
     }
 
     @AfterClass(alwaysRun = true)
     public void browserTearDown() {
-        DriverSingleton.closeDriver();
+        DriverSingleton.getInstance().closeDriver();
     }
 }

@@ -1,5 +1,6 @@
 package com.epam.taf.test;
 
+import com.epam.taf.components.CookieBannerComponent;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import com.epam.taf.pages.RegistrationPage;
@@ -15,11 +16,9 @@ public class RegistrationPageTest extends CommonConditions {
     @Test(priority = 1)
     public void verifyRegistrationScreenTitle() {
         registrationScreen = new RegistrationPage(driver);
-        String expectedPageTitle = registrationScreen
-                .openPage()
-                .clickAcceptCookieBanner()
-                .getPageTitle();
-        assertEquals(expectedPageTitle, REGISTRATION_PAGE_TITLE, "Titles are not equals!");
+        registrationScreen.openPage();
+        new CookieBannerComponent(driver).clickAcceptCookieBanner();
+        assertEquals(registrationScreen.getPageTitle(), REGISTRATION_PAGE_TITLE, "Titles are not equals!");
     }
 
     @Test(priority = 2)

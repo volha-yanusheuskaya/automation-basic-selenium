@@ -5,11 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import com.epam.taf.driver.DriverSingleton;
 
-import static com.epam.taf.driver.DriverWait.waitForVisibility;
+import static com.epam.taf.util.WaitUtils.waitForVisibility;
 
 public class WebElementUtils {
 
-    private static final WebDriver driver = DriverSingleton.getDriver();
+    private static final WebDriver driver = DriverSingleton.getInstance().getDriver();
 
     private WebElementUtils() {
     }
