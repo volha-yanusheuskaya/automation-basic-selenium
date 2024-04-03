@@ -1,4 +1,4 @@
-package com.epam.taf.test;
+package com.epam.taf.test.ui;
 
 import com.epam.taf.components.CookieBannerComponent;
 import com.epam.taf.components.LanguageDropdownComponent;

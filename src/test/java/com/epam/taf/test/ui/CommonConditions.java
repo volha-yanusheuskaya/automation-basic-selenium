@@ -1,4 +1,4 @@
-package com.epam.taf.test;
+package com.epam.taf.test.ui;
 
 import com.epam.taf.util.TestListener;
 import org.openqa.selenium.WebDriver;
