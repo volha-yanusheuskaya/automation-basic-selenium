@@ -2,6 +2,7 @@ package com.epam.taf.test.ui;
 
 import com.epam.taf.components.CookieBannerComponent;
 import com.epam.taf.service.RegistrationService;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import com.epam.taf.components.AlertBannerComponent;
@@ -14,15 +15,18 @@ public class RegistrationUserExistsTest extends CommonConditions {
 
     private AlertBannerComponent alertBannerComponent;
 
-    @Test(priority = 1)
-    public void verifyAlertBanner() {
+    @BeforeClass
+    public void openRegistrationPageAndFillOutRegistrationForm() {
         alertBannerComponent = new AlertBannerComponent(driver);
 
         new RegistrationPage(driver).openPage();
         new CookieBannerComponent(driver).clickAcceptCookieBanner();
 
         new RegistrationService(driver).fillOutRegistrationForm(UserCreator.createExistingUser());
+    }
 
+    @Test(priority = 1)
+    public void verifyAlertBanner() {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(alertBannerComponent.isAlertBannerDisplayed());
         softAssert.assertTrue(alertBannerComponent.isAlertBannerIconDisplayed());

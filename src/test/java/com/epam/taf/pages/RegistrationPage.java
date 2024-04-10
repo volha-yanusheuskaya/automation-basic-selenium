@@ -37,11 +37,16 @@ public class RegistrationPage extends AbstractPage {
         super(driver);
     }
 
-    public RegistrationPage openPage() {
+    public void openPage() {
         driver.get(TestDataReader.getTestData(TESTDATA_REGISTRATION_PAGE_URL));
         waitForVisibility(firstNameInput);
         logger.info("The Create account page is opened");
-        return this;
+    }
+
+    public String getPageUrl() {
+        String url = driver.getCurrentUrl();
+        logger.info(String.format("The URL of the page - '%s'", url));
+        return url;
     }
 
     public String getPageTitle() {

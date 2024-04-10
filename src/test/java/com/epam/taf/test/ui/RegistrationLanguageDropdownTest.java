@@ -2,6 +2,7 @@ package com.epam.taf.test.ui;
 
 import com.epam.taf.components.CookieBannerComponent;
 import com.epam.taf.components.LanguageDropdownComponent;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.epam.taf.pages.RegistrationPage;
 
@@ -15,13 +16,16 @@ public class RegistrationLanguageDropdownTest extends CommonConditions {
 
     private LanguageDropdownComponent languageDropdownComponent;
 
-    @Test(priority = 1)
-    public void verifyLanguageValues() {
+    @BeforeClass
+    public void openRegistrationPage() {
         languageDropdownComponent = new LanguageDropdownComponent(driver);
 
         new RegistrationPage(driver).openPage();
         new CookieBannerComponent(driver).clickAcceptCookieBanner();
+    }
 
+    @Test(priority = 1)
+    public void verifyLanguageValues() {
         int actualNumberOfLanguages = languageDropdownComponent
                 .clickLanguageDropdown()
                 .getLanguageDropdownSize();
