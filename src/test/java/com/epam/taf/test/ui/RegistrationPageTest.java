@@ -1,11 +1,13 @@
 package com.epam.taf.test.ui;
 
 import com.epam.taf.components.CookieBannerComponent;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import com.epam.taf.pages.RegistrationPage;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class RegistrationPageTest extends CommonConditions {
 
@@ -13,11 +15,20 @@ public class RegistrationPageTest extends CommonConditions {
 
     private RegistrationPage registrationScreen;
 
-    @Test(priority = 1)
-    public void verifyRegistrationScreenTitle() {
+    @BeforeClass
+    public void openRegistrationPage() {
         registrationScreen = new RegistrationPage(driver);
         registrationScreen.openPage();
         new CookieBannerComponent(driver).clickAcceptCookieBanner();
+    }
+
+    @Test(priority = 1)
+    public void verifyRegistrationUrl() {
+        assertTrue(registrationScreen.getPageUrl().endsWith("/profile/create-account"), "The URL is not correct!");
+    }
+
+    @Test(priority = 1)
+    public void verifyRegistrationScreenTitle() {
         assertEquals(registrationScreen.getPageTitle(), REGISTRATION_PAGE_TITLE, "Titles are not equals!");
     }
 

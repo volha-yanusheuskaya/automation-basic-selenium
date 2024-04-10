@@ -11,6 +11,8 @@ import static com.epam.taf.util.WaitUtils.waitForVisibility;
 
 public class LanguageDropdownComponent extends AbstractComponent {
 
+    public static final String LANGUAGE_DROPDOWN_ITEM = ".CiamDropdown-itemInnerText";
+
     public static final String LANGUAGE_VALUE_PATTERN = "//button/span[text()='%s']";
     public static final String LANGUAGE_WITH_CHECKMARK = "//button/span[text()='%s']/following-sibling::span";
 
@@ -36,7 +38,7 @@ public class LanguageDropdownComponent extends AbstractComponent {
     }
 
     public int getLanguageDropdownSize() {
-        return driver.findElements(By.cssSelector(".CiamDropdown-itemInnerText")).size();
+        return driver.findElements(By.cssSelector(LANGUAGE_DROPDOWN_ITEM)).size();
     }
 
     public LanguageDropdownComponent clickLanguageByValue(String value) {
