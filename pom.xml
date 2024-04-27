@@ -103,5 +103,17 @@
             <artifactId>cucumber-testng</artifactId>
             <version>7.16.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>agent-java-testng</artifactId>
+            <version>5.4.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>logger-java-log4j</artifactId>
+            <version>5.2.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
